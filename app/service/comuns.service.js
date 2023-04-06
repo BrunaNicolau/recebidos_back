@@ -1,5 +1,5 @@
 const postsData = require('../repository/comuns.repository');
 
-exports.getPosts = function (){
-    return postsData.getPosts();
+exports.authUser = function (){
+    // montar service de autenticação de ususario
 };
