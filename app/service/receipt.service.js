@@ -1,4 +1,4 @@
-const reciptData = require("../repository/recibo.repository");
+const reciptData = require("../repository/receipt.repository");
 
 exports.getReceipts = function () {
   //montar query

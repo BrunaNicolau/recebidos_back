@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const escritorioService = require("../service/escritorio.service");
+const escritorioService = require("../service/office.service");
 
 router.get("/teste", async function (req, res, next) {
   try {
@@ -10,10 +10,10 @@ router.get("/teste", async function (req, res, next) {
   }
 });
 
-router.get("/officesList", async function (req, res, next) {
+router.get("/officesList/:id", async function (req, res, next) {
   try {
-    const posts = await escritorioService.getOffices();
-    res.json(posts);
+    const listOffice = await escritorioService.getOffices(req);
+    res.json(listOffice);
   } catch (e) {
     next(e);
   }
@@ -29,12 +29,9 @@ router.put("/editOffices", async function (req, res, next) {
 });
 
 router.post("/newOffices", async function (req, res, next) {
-  const post = req.body;
-  console.log(req);
-
-  res.send('welcome, ' + req.body.dia);
+  const post = req.body.nome;
   try {
-    const newPost = await postsService.savePost(post);
+    // const newPost = await postsService.savePost(post);
     res.json(post);
   } catch (e) {
     next(e);

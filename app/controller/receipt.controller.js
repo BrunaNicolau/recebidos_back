@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const receiptsService = require("../service/recibo.service"); 
+const receiptsService = require("../service/receipt.service"); 
 
 
 router.get("/teste", async function (req, res, next) {

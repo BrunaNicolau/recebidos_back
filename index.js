@@ -10,13 +10,13 @@ app.use(bodyParser.json());
 
 app.use("/recebidos", require("./app/controller/comuns.controller"));
 app.use(
-  "/recebidos/escritorio",
-  require("./app/controller/escritorio.controller")
+  "/recebidos/office",
+  require("./app/controller/office.controller")
 );
-app.use("/recebidos/recibo", require("./app/controller/recibo.controller"));
+app.use("/recebidos/receipt", require("./app/controller/receipt.controller"));
 app.use(
-  "/recebidos/contribuinte",
-  require("./app/controller/contribuinte.controller")
+  "/recebidos/donor",
+  require("./app/controller/donor.controller")
 );
 
 app.listen(port, () => {
