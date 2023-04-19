@@ -12,8 +12,26 @@ router.get("/teste", async function (req, res, next) {
 
 router.get("/officesList/:id", async function (req, res, next) {
   try {
-    const listOffice = await escritorioService.getOffices(req);
+    const listOffice = await escritorioService.getlistOffices(req);
     res.json(listOffice);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/getOffice/:id", async function (req, res, next) {
+  try {
+    const office = await escritorioService.getOffice(req);
+    res.json(office);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post("/newOffice", async function (req, res, next) {
+  try {
+    const msg = await escritorioService.createOffice(req);
+    res.json(msg);
   } catch (e) {
     next(e);
   }
@@ -23,16 +41,6 @@ router.put("/editOffices", async function (req, res, next) {
   try {
     const posts = await escritorioService.createOffice(req);
     res.json(posts);
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.post("/newOffices", async function (req, res, next) {
-  const post = req.body.nome;
-  try {
-    // const newPost = await postsService.savePost(post);
-    res.json(post);
   } catch (e) {
     next(e);
   }

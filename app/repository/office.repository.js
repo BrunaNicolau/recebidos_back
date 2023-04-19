@@ -7,17 +7,18 @@ exports.getOfficesByinstituicaoid = function (id) {
   );
 };
 
-exports.getReceiptByescritorioid = function (id) {
+exports.getOfficesByOfficeId = function (id) {
   return db.query(
-    "SELECT escritorio_id, SUM(valor) FROM public.recibo WHERE escritorio_id = $1 GROUP BY escritorio_id;",[id]
+    "SELECT id, instituicaoid, nome, responsavel, endereco, documento, inicio, fim, status FROM public.escritorio WHERE id = $1",
+    [id]
   );
 };
 
-exports.insertNewOffice = function (dataOffice) {
-  // TODO: nome e endereço são opicionais
+exports.newOffice = function (data) {
+  //TODO: criar coluna cep e telefone e apagar coluna nome 
   return db.query(
-    "INSERT INTO recebidos.escritorio(instituicaoid, nome, responsavel, endereco, documento, inicio) VALUES ($1)",
-    [dataOffice]
+    "INSERT INTO public.escritorio(instituicaoid, responsavel, endereco, documento, inicio) VALUES ($1, $2, $3, $4, $5)",
+    [data.institutionId, data.responsible, data.adress, data.document, data.date]
   );
 };
 
@@ -33,5 +34,12 @@ exports.updateDataOffice = function (dataOffice, id) {
       dataOffice.status,
       id,
     ]
+  );
+};
+
+exports.getReceiptByescritorioid = function (id) {
+  return db.query(
+    "SELECT escritorio_id, SUM(valor) FROM public.recibo WHERE escritorio_id = $1 GROUP BY escritorio_id;",
+    [id]
   );
 };

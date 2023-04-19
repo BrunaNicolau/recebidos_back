@@ -1,35 +1,34 @@
 const escritorioData = require("../repository/office.repository");
 
-// TODO: por validação de usario e ajustar o res
-exports.getOffices = async function (req) {
+// TODO: na tabela de escritorioData, preciso criar os campos cep e telefone
+
+exports.getlistOffices = async function (req) {
   const instituicaoid = req.params.id;
-  const officesData = await escritorioData.getOfficesByinstituicaoid(
+  let officesList = await escritorioData.getOfficesByinstituicaoid(
     instituicaoid
   );
-  
-  
-  let storeReceiptPerOffice = [];
-  officesData.forEach( async office => {
-    const receiptData = await escritorioData.getReceiptByescritorioid(office.id);
-    storeReceiptPerOffice.push(receiptData);
-    console.log(storeReceiptPerOffice);
-  });
 
-  const res = await storeReceiptPerOffice;
-  console.log(res)
-
-  return res;
+  return officesList;
 };
 
-exports.createOffice = function (req) {
-  //montar validação da req
-  // console.log(req)
-  let dataOffice = req;
+exports.getOffice = async function (req) {
+  const officeID = req.params.id;
+  let officeData = await escritorioData.getOfficesByOfficeId(officeID);
+  console.log(officeData);
+  // create query
 
-  //TODO: ajustar essa query
-  const t = escritorioData.getOfficesByinstituicaoid(req);
-  // console.log('passou aq')
-  return dataOffice;
+  return officeData;
+};
+
+
+exports.createOffice = async function (req) {
+  //TODO: validação da req
+  const dataOffice = req.body;
+  // console.log(dataOffice);
+
+  const create = await escritorioData.newOffice(dataOffice);
+  console.log(create)
+  return create;
 };
 
 exports.editOffice = function (req) {
