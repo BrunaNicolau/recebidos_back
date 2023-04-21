@@ -1,38 +1,40 @@
 const escritorioData = require("../repository/office.repository");
 
-// TODO: na tabela de escritorioData, preciso criar os campos cep e telefone
-
 exports.getlistOffices = async function (req) {
   const instituicaoid = req.params.id;
   let officesList = await escritorioData.getOfficesByinstituicaoid(
     instituicaoid
   );
-
+    // TODO: montar resposta com todos os campo
   return officesList;
 };
 
 exports.getOffice = async function (req) {
   const officeID = req.params.id;
   let officeData = await escritorioData.getOfficesByOfficeId(officeID);
-  console.log(officeData);
-  // create query
-
   return officeData;
 };
 
-
 exports.createOffice = async function (req) {
-  //TODO: validação da req
   const dataOffice = req.body;
-  // console.log(dataOffice);
-
   const create = await escritorioData.newOffice(dataOffice);
-  console.log(create)
-  return create;
+  if(create){
+    var resNew = {
+      txt: 'Escritorio criado com sucesso:',
+      id: create[0].id
+    }
+  };
+  return resNew;
 };
 
-exports.editOffice = function (req) {
-  const t = escritorioData.getOfficesByinstituicaoid(req);
-  //montar validação da req
-  //montar query
+exports.editOffice = async function (req) {
+  const office = req.body;
+  const updOffice = await escritorioData.updateDataOffice(office);
+  if(updOffice){
+    var resUpdate = {
+      txt: 'Escritorio atulizado com sucesso:',
+      id: updOffice[0].id
+    }
+  };
+  return resUpdate;
 };
