@@ -7,7 +7,7 @@ const updateOfficeValidators = async (req, res, next) => {
       document: Yup.number().required(),
       institutionId: Yup.number(),
       officeId: Yup.number().required(),
-      zipCode: Yup.number(), 
+      zipCode: Yup.number().required, 
       adress: Yup.string().required(),
       telephone: Yup.number(),
       status: Yup.string().required(),

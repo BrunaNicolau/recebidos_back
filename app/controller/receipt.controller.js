@@ -11,6 +11,15 @@ router.get("/teste", async function (req, res, next) {
   }
 });
 
+router.get("/listReceipts/:id", async function (req, res, next) {
+  try {
+    const posts = await receiptsService.getReceipts(req.params);
+    res.json(posts);
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.get("/getReceipts", async function (req, res, next) {
   try {
     const posts = await receiptsService.getReceipts();

@@ -2,10 +2,10 @@ const escritorioData = require("../repository/office.repository");
 
 exports.getlistOffices = async function (req) {
   const instituicaoid = req.params.id;
-  let officesList = await escritorioData.getOfficesByinstituicaoid(
+  const officesList = await escritorioData.getOfficesByinstituicaoid(
     instituicaoid
   );
-    // TODO: montar resposta com todos os campo
+  // TODO: montar resposta com todos os campo
   return officesList;
 };
 
@@ -18,23 +18,23 @@ exports.getOffice = async function (req) {
 exports.createOffice = async function (req) {
   const dataOffice = req.body;
   const create = await escritorioData.newOffice(dataOffice);
-  if(create){
+  if (create) {
     var resNew = {
-      txt: 'Escritorio criado com sucesso:',
-      id: create[0].id
-    }
-  };
+      txt: "Escritorio criado com sucesso:",
+      id: create[0].id,
+    };
+  }
   return resNew;
 };
 
 exports.editOffice = async function (req) {
   const office = req.body;
   const updOffice = await escritorioData.updateDataOffice(office);
-  if(updOffice){
+  if (updOffice) {
     var resUpdate = {
-      txt: 'Escritorio atulizado com sucesso:',
-      id: updOffice[0].id
-    }
-  };
+      txt: "Escritorio atulizado com sucesso:",
+      id: updOffice[0].id,
+    };
+  }
   return resUpdate;
 };
