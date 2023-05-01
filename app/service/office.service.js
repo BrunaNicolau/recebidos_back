@@ -5,7 +5,7 @@ exports.getlistOffices = async function (req) {
   const officesList = await escritorioData.getOfficesByinstituicaoid(
     instituicaoid
   );
-  // TODO: montar resposta com todos os campo
+  // TODO: montar resposta com todos os campo e tratar erros 
   return officesList;
 };
 

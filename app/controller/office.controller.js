@@ -41,7 +41,7 @@ router.post("/newOffice", validatorNewOffice, async function (req, res, next) {
   }
 });
 
-router.put("/editOffices", validatorUpdateOffice, async function (req, res, next) {
+router.put("/editOffice", validatorUpdateOffice, async function (req, res, next) {
   try {
     const posts = await escritorioService.editOffice(req);
     res.json(posts);
