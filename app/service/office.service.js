@@ -1,11 +1,14 @@
+const { json } = require("body-parser");
 const escritorioData = require("../repository/office.repository");
 
-exports.getlistOffices = async function (req) {
+exports.getlistOffices = async function (req, res) {
   const instituicaoid = req.params.id;
   const officesList = await escritorioData.getOfficesByinstituicaoid(
     instituicaoid
   );
   // TODO: montar resposta com todos os campo e tratar erros 
+  if(officesList.length <= 0) return res.status(204).json({error: 'Office no found!'})
+
   return officesList;
 };
 

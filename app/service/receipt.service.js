@@ -2,7 +2,6 @@ const receiptData = require("../repository/receipt.repository");
 
 exports.getReceipts = function (req) {
   const receiptList = receiptData.getReceipts(req);
-  console.log(receiptList);
   // TODO: montar resposta com todos os campo
   // TODO: ajustar para atender os 2 fluxos
   return receiptList;

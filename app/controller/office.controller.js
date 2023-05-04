@@ -3,8 +3,8 @@ const router = express.Router();
 
 const escritorioService = require("../service/office.service");
 
-const validatorNewOffice = require('../models/newOffice.model');
-const validatorUpdateOffice = require('../models/updateOffice.model');
+const validatorNewOffice = require("../models/newOffice.model");
+const validatorUpdateOffice = require("../models/updateOffice.model");
 
 router.get("/teste", async function (req, res, next) {
   try {
@@ -16,7 +16,7 @@ router.get("/teste", async function (req, res, next) {
 
 router.get("/officesList/:id", async function (req, res, next) {
   try {
-    const listOffice = await escritorioService.getlistOffices(req);
+    const listOffice = await escritorioService.getlistOffices(req, res);
     res.json(listOffice);
   } catch (e) {
     next(e);
@@ -41,14 +41,17 @@ router.post("/newOffice", validatorNewOffice, async function (req, res, next) {
   }
 });
 
-router.put("/editOffice", validatorUpdateOffice, async function (req, res, next) {
-  try {
-    const posts = await escritorioService.editOffice(req);
-    res.json(posts);
-  } catch (e) {
-    next(e);
+router.put(
+  "/editOffice",
+  validatorUpdateOffice,
+  async function (req, res, next) {
+    try {
+      const posts = await escritorioService.editOffice(req);
+      res.json(posts);
+    } catch (e) {
+      next(e);
+    }
   }
-});
-
+);
 
 module.exports = router;
