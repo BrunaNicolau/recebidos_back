@@ -25,7 +25,7 @@ router.get("/officesList/:id", async function (req, res, next) {
 
 router.get("/getOffice/:id", async function (req, res, next) {
   try {
-    const office = await escritorioService.getOffice(req);
+    const office = await escritorioService.getOffice(req, res);
     res.json(office);
   } catch (e) {
     next(e);
@@ -34,7 +34,7 @@ router.get("/getOffice/:id", async function (req, res, next) {
 
 router.post("/newOffice", validatorNewOffice, async function (req, res, next) {
   try {
-    const msg = await escritorioService.createOffice(req);
+    const msg = await escritorioService.createOffice(req, res);
     res.json(msg);
   } catch (e) {
     next(e);

@@ -8,7 +8,7 @@ exports.getOfficesByinstituicaoid = function (id) {
 };
 
 exports.getOfficesByOfficeId = function (id) {
-  return db.query(
+  return db.oneOrNone(
     "SELECT id, instituicaoid, responsavel, endereco, cep, telefone, documento, inicio, fim, status FROM public.escritorio WHERE id = $1",
     [id]
   );

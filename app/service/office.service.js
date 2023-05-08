@@ -2,23 +2,23 @@ const { json } = require("body-parser");
 const escritorioData = require("../repository/office.repository");
 
 exports.getlistOffices = async function (req, res) {
+  // TODO: montar resposta com todos os campo 
   const instituicaoid = req.params.id;
   const officesList = await escritorioData.getOfficesByinstituicaoid(
     instituicaoid
   );
-  // TODO: montar resposta com todos os campo e tratar erros 
-  if(officesList.length <= 0) return res.status(204).json({error: 'Office no found!'})
-
+  if(officesList.length <= 0) throw res.status(204).json({ error: 'nao encontrado'});
   return officesList;
 };
 
-exports.getOffice = async function (req) {
+exports.getOffice = async function (req, res) {
   const officeID = req.params.id;
   let officeData = await escritorioData.getOfficesByOfficeId(officeID);
+  if(!officeData) throw res.status(204).json({ error: 'nao encontrado'});
   return officeData;
 };
 
-exports.createOffice = async function (req) {
+exports.createOffice = async function (req, res) {
   const dataOffice = req.body;
   const create = await escritorioData.newOffice(dataOffice);
   if (create) {
@@ -26,6 +26,8 @@ exports.createOffice = async function (req) {
       txt: "Escritorio criado com sucesso:",
       id: create[0].id,
     };
+  } else {
+    throw res.status(403).json({ error: 'Acao Proibida'})
   }
   return resNew;
 };
@@ -38,6 +40,8 @@ exports.editOffice = async function (req) {
       txt: "Escritorio atulizado com sucesso:",
       id: updOffice[0].id,
     };
+  } else {
+    throw res.status(403).json({ error: 'Acao Proibida'})
   }
   return resUpdate;
 };
