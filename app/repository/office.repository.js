@@ -20,7 +20,7 @@ exports.newOffice = function (data) {
     [
       data.institutionId,
       data.responsible,
-      data.adress,
+      data.address,
       data.document,
       data.zipCode,
       data.telephone,
@@ -34,7 +34,7 @@ exports.updateDataOffice = function (dataOffice) {
     [
       dataOffice.responsible,
       dataOffice.document,
-      dataOffice.adress,
+      dataOffice.address,
       dataOffice.zipCode,
       dataOffice.telephone,
       dataOffice.endDate,

@@ -8,7 +8,7 @@ const newOfficeValidators = async (req, res, next) => {
       document: Yup.number().required(),
       startDate: Yup.date().required(),
       zipCode: Yup.number().required(), 
-      adress: Yup.string().required(),
+      address: Yup.string().required(),
       telephone: Yup.number().required(),
     });
 

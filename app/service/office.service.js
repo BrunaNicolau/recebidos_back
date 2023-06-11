@@ -1,4 +1,3 @@
-const { json } = require("body-parser");
 const escritorioData = require("../repository/office.repository");
 
 exports.getlistOffices = async function (req, res) {
@@ -19,7 +18,7 @@ exports.getOffice = async function (req, res) {
 };
 
 exports.createOffice = async function (req, res) {
-  const dataOffice = req.body;
+  const dataOffice = await req.body;
   const create = await escritorioData.newOffice(dataOffice);
   if (create) {
     var resNew = {
