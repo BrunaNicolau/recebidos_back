@@ -15,6 +15,7 @@ exports.getOfficesByOfficeId = function (id) {
 };
 
 exports.newOffice = function (data) {
+  //TODO: falta gravar a data de inicio
   return db.query(
     "INSERT INTO public.escritorio(instituicaoid, responsavel, endereco, documento, cep, telefone) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
     [
@@ -23,7 +24,7 @@ exports.newOffice = function (data) {
       data.address,
       data.document,
       data.zipCode,
-      data.telephone,
+      data.telephone
     ]
   );
 };
@@ -39,7 +40,7 @@ exports.updateDataOffice = function (dataOffice) {
       dataOffice.telephone,
       dataOffice.endDate,
       dataOffice.status,
-      dataOffice.officeId,
+      dataOffice.officeId
     ]
   );
 };

@@ -4,7 +4,7 @@ const router = express.Router();
 const escritorioService = require("../service/office.service");
 
 const validatorNewOffice = require("../models/newOffice.model");
-const validatorUpdateOffice = require("../models/updateOffice.model");
+const updateOfficeValidators = require("../models/updateOffice.model");
 
 router.get("/teste", async function (req, res, next) {
   try {
@@ -43,10 +43,10 @@ router.post("/newOffice", validatorNewOffice, async function (req, res, next) {
 
 router.put(
   "/editOffice",
-  validatorUpdateOffice,
+  updateOfficeValidators,
   async function (req, res, next) {
     try {
-      const posts = await escritorioService.editOffice(req);
+      const posts = await escritorioService.editOffice(req, res);
       res.json(posts);
     } catch (e) {
       next(e);
