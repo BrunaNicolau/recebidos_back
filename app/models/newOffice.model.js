@@ -10,6 +10,7 @@ const newOfficeValidators = async (req, res, next) => {
       zipCode: Yup.number().required(), 
       address: Yup.string().required(),
       telephone: Yup.number().required(),
+      email: Yup.string().required(),
     });
 
     await schema.validate(req.body, { abortEarly: false });

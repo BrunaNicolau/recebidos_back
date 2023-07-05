@@ -11,7 +11,8 @@ const updateOfficeValidators = async (req, res, next) => {
       endDate: Yup.date(),
       status: Yup.string().required(),
       officeId: Yup.number().required(),
-      institutionId: Yup.number()
+      institutionId: Yup.number(),
+      email: Yup.string().required(),
     });
 
     await schema.validate(req.body, { abortEarly: false });
