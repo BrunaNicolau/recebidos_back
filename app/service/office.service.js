@@ -13,7 +13,7 @@ exports.getlistOffices = async function (req, res) {
 
 exports.getOffice = async function (req, res) {
   const officeID = req.params.id;
-  let officeData = await escritorioData.getOfficesByOfficeId(officeID);
+  const officeData = await escritorioData.getOfficesByOfficeId(officeID);
   if (!officeData) throw res.status(204).json({ error: "nao encontrado" });
   return officeData;
 };

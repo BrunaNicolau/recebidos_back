@@ -1,22 +1,27 @@
 const receiptData = require("../repository/receipt.repository");
 
-exports.getReceipts = function (req) {
-  const receiptList = receiptData.getReceipts(req);
+exports.getReceipts = async function (req, res) {
   // TODO: montar resposta com todos os campo
-  // TODO: ajustar para atender os 2 fluxos
+  const instituicaoId = req.params.id;
+  const receiptList = await receiptData.getReceipts(instituicaoId);
+  if (receiptList.length <= 0)
+    throw res.status(204).json({ error: "nao encontrado" });
   return receiptList;
 };
 
-exports.getReceiptById = function () {
-  //montar query
+exports.getReceiptById = async function (req, res) {
+  const receiptId = req.params.id;
+  const receiptInfo = await receiptData.getReceipt(receiptId);
+  if (!receiptInfo) throw res.status(204).json({ error: "nao encontrado" });
+  return receiptInfo;
 };
 
-exports.editReceipts = function () {
+exports.createReceipts = function () {
   // validação de ususario
   //montar query
 };
 
-exports.createReceipts = function () {
+exports.editReceipts = function () {
   // validação de ususario
   //montar query
 };

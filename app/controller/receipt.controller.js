@@ -2,27 +2,18 @@ const express = require("express");
 const router = express.Router();
 const receiptsService = require("../service/receipt.service"); 
 
-
-router.get("/teste", async function (req, res, next) {
-  try {
-    res.json("teste");
-  } catch (e) {
-    next(e);
-  }
-});
-
 router.get("/listReceipts/:id", async function (req, res, next) {
   try {
-    const posts = await receiptsService.getReceipts(req.params);
+    const posts = await receiptsService.getReceipts(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
   }
 });
 
-router.get("/getReceipts", async function (req, res, next) {
+router.get("/getReceipt/:id", async function (req, res, next) {
   try {
-    const posts = await receiptsService.getReceipts();
+    const posts = await receiptsService.getReceiptById(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
