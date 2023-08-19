@@ -24,6 +24,7 @@ exports.createReceipts = function () {
 exports.editReceipts = function () {
   // validação de ususario
   //montar query
+  return "bateu na funcao edit !";
 };
 
 exports.editStatusReceipts = function () {

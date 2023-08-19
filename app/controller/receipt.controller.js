@@ -11,7 +11,7 @@ router.get("/listReceipts/:id", async function (req, res, next) {
   }
 });
 
-router.get("/getReceipt/:id", async function (req, res, next) {
+router.get("/receiptById/:id", async function (req, res, next) {
   try {
     const posts = await receiptsService.getReceiptById(req, res);
     res.json(posts);
@@ -20,9 +20,10 @@ router.get("/getReceipt/:id", async function (req, res, next) {
   }
 });
 
-router.put("/editReceipts", async function (req, res, next) {
+router.put("/editReceipt", async function (req, res, next) {
   try {
-    const posts = await receiptsService.getReceipts();
+    console.log("/editReceipt bateu aq")
+    const posts = await receiptsService.editReceipts();
     res.json(posts);
   } catch (e) {
     next(e);
