@@ -7,14 +7,14 @@ exports.getlistOffices = async function (req, res) {
     instituicaoid
   );
   if (officesList.length <= 0)
-    throw res.status(204).json({ error: "nao encontrado" });
+    throw res.status(204).json({ error: "não encontrado" });
   return officesList;
 };
 
 exports.getOffice = async function (req, res) {
   const officeID = req.params.id;
   const officeData = await escritorioData.getOfficesByOfficeId(officeID);
-  if (!officeData) throw res.status(204).json({ error: "nao encontrado" });
+  if (!officeData) throw res.status(204).json({ error: "não encontrado" });
   return officeData;
 };
 
@@ -22,14 +22,14 @@ exports.createOffice = async function (req, res) {
   const dataOffice = await req.body;
   const create = await escritorioData.newOffice(dataOffice);
   if (create) {
-    var resNew = {
+    var resNewOffice = {
       txt: "Escritorio criado com sucesso:",
       id: create[0].id,
     };
   } else {
-    throw res.status(403).json({ error: "Acao Proibida" });
+    throw res.status(403).json({ error: "Ação não permitida" });
   }
-  return resNew;
+  return resNewOffice;
 };
 
 exports.editOffice = async function (req, res) {

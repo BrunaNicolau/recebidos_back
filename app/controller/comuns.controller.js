@@ -10,4 +10,20 @@ router.get("/authService", async function (req, res, next) {
   }
 });
 
+router.get("/listOffice", async function (req, res, next) {
+  try {
+    res.json("teste");
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/listInstitution", async function (req, res, next) {
+  try {
+    res.json("teste");
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
