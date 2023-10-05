@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const receiptsService = require("../service/receipt.service");
+const path = require('path'); 
 
 router.get("/listReceipts/:id", async function (req, res, next) {
   try {
@@ -42,6 +43,16 @@ router.patch("/editReceipt", async function (req, res, next) {
   try {
     const posts = await receiptsService.editStatusReceipts(req);
     res.json(posts);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/generate-pdf", async function (req, res, next) {
+  try {
+    //TODO: por no lugar certo 
+    const pdfPath = path.join(__dirname, '../utils/storage', '/storagefile.pdf');
+    res.sendFile(pdfPath);
   } catch (e) {
     next(e);
   }
