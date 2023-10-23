@@ -9,7 +9,7 @@ exports.getReceipts = function (id) {
 
 exports.getReceipt = function (id) {
   return db.oneOrNone(
-    "SELECT * FROM public.recibo WHERE id = $1 ORDER BY id ASC",
+    "SELECT * FROM public.recibo WHERE id = $1",
     [id]
   );
 };
@@ -29,9 +29,15 @@ exports.editReceipt = function (data) {
 };
 
 exports.editStatusReceipt = function (data) {
-  console.log("entrou no repository do stattus")
   return db.oneOrNone(
     "UPDATE public.recibo SET status = $1, fim = $2 WHERE id = $3 RETURNING id",
     [data.status, data.fim, data.id]
+  );
+};
+
+exports.getDocReceipt = function (id) {
+  return db.oneOrNone(
+    "SELECT * FROM public.recibo WHERE id = $1 AND status != R",
+    [id]
   );
 };

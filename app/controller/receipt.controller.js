@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const receiptsService = require("../service/receipt.service");
-const gerarPDF = require("../utils/buildReceiptPDF");
 
 router.get("/listReceipts/:id", async function (req, res, next) {
   try {
@@ -23,7 +22,7 @@ router.get("/receiptById/:id", async function (req, res, next) {
 
 router.post("/createReceipts", async function (req, res, next) {
   try {
-    const posts = await receiptsService.createReceipts(req, res);
+    const posts = await receiptsService.buildReceiptDoc(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
@@ -48,13 +47,16 @@ router.patch("/editReceipt", async function (req, res, next) {
   }
 });
 
-router.get("/generate-pdf", (req, res) => {
-  const pdf = gerarPDF();
-
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", "inline; filename=output.pdf");
-  pdf.pipe(res);
-  pdf.end();
+router.get("/generate-pdf", async function (req, res) {
+  try {
+    const doc = await receiptsService.editStatusReceipts(req);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "inline; filename=output.pdf");
+    pdf.pipe(doc);
+    pdf.end();
+  } catch {
+    next(e);
+  }
 });
 
 module.exports = router;

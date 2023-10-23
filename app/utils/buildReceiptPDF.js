@@ -1,74 +1,7 @@
-// const PDFDocument = require("pdfkit");
-// const path = require("path");
-
-// function gerarPDF() {
-//   const pdf = new PDFDocument({
-//     size: "A4",
-//     layout: "landscape",
-//   });
-
-//   const imagePath = path.join(__dirname, "img/logoDL.png");
-//   pdf.image(imagePath, 10, 10);
-
-//   const doc = "CNPJ: 09.973.391/0001-32";
-//   const street = "R. Major Boaventura, 558 - CEP: 03569-030";
-//   const neighborhood = "VL. Nhocuné - São Paulo";
-//   const inscription = "Insc. Municipal: 427.422";
-//   const tel = "(11) 2217-0643";
-//   const cel = "(11) 96220-1765";
-
-//   //TODO: ira receber valor dinamico
-//   const id = 10000;
-//   const paymentMethhod = "Cartao";
-//   const value = "20,00";
-//   const date = new Date();
-
-//   pdf.fontSize(12);
-//   pdf.text(doc, 350, 35);
-//   pdf.text(street, 350, 70);
-//   pdf.text(neighborhood, 350, 105);
-//   pdf.text(inscription, 640, 35);
-//   pdf.text(tel, 685, 70);
-//   pdf.text(cel, 680, 105);
-
-//   pdf.lineWidth(1);
-//   pdf.moveTo(10, 145).lineTo(770, 145).stroke();
-
-//   pdf.font("Helvetica-Bold");
-//   pdf.text("RECIBO:", 400, 160);
-//   pdf.font("Helvetica");
-//   pdf.text(`${id}`, 460, 160);
-
-//   pdf.fontSize(15);
-//   pdf.font("Helvetica-Bold");
-//   pdf.text("Método de pagamento:", 10, 200);
-//   pdf.font("Helvetica");
-//   pdf.text(`${paymentMethhod}`, 200, 200);
-
-//   pdf.fontSize(15);
-//   pdf.font("Helvetica-Bold");
-//   pdf.text("Valor:", 10, 250);
-//   pdf.font("Helvetica");
-//   pdf.text(`${value}`, 100, 250);
-
-//   pdf.fontSize(15);
-//   pdf.font("Helvetica-Bold");
-//   pdf.text("Data:", 10, 300);
-//   pdf.font("Helvetica");
-//   pdf.text(`${date.toLocaleDateString()}`, 100, 300);
-
-//   const logoPath = path.join(__dirname, "img/logoStxt.png");
-//   pdf.image(logoPath, 100, 300);
-
-//   return pdf;
-// }
-
-// module.exports = gerarPDF;
-
 const PDFDocument = require("pdfkit");
 const path = require("path");
 
-function gerarPDF() {
+function gerarPDF(receiptData) {
   const pdf = new PDFDocument({
     size: [420, 595],
     layout: "landscape",
@@ -85,12 +18,12 @@ function gerarPDF() {
   const cel = "(11) 96220-1765";
 
   // TODO: ira receber valor dinamico
-  const id = 10000;
-  const paymentMethhod = "Cartão";
-  const value = "20,00";
-  const date = new Date();
+  const id = receiptData.escritorio_id;
+  const paymentMethhod = receiptData.method_payment;
+  const value = receiptData.valor;
+  const date = new Date(receiptData.inicio);
 
-  pdf.fontSize(8);
+  pdf.fontSize(10);
   pdf.text(doc, 200, 30);
   pdf.text(street, 200, 60);
   pdf.text(neighborhood, 200, 90);
