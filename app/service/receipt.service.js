@@ -1,4 +1,5 @@
 const receiptData = require("../repository/receipt.repository");
+const gerarPDF = require("../utils/buildReceiptPDF");
 
 exports.getReceipts = async function (req, res) {
   // TODO: montar resposta com todos os campo
@@ -64,4 +65,13 @@ exports.editStatusReceipts = async function (req, res) {
     throw res.status(403).json({ error: "Erro" });
   }
   return resUpdate;
+};
+
+
+exports.buildReceiptDoc = async function (req, res) {
+  const recovedReceipt = await receiptData.getDocReceipt(req);
+  const pdf = '';
+  if(recovedReceipt) pdf = gerarPDF(recovedReceipt);
+  else throw res.status(403).json({ error: "Erro" });
+  return pdf;
 };
