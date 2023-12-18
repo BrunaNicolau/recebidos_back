@@ -17,7 +17,7 @@ exports.getReceipt = function (id) {
 exports.createNewReceipt = function (data) {
   return db.oneOrNone(
     "INSERT INTO public.recibo(escritorio_id, instituicao_id, valor, method_payment) VALUES ($1, $2, $3, $4) RETURNING id",
-    [data.office, data.institution, data.value, data.method_payment]
+    [data.office, data.institution, data.value, data.paymentMethod]
   );
 };
 
@@ -31,13 +31,13 @@ exports.editReceipt = function (data) {
 exports.editStatusReceipt = function (data) {
   return db.oneOrNone(
     "UPDATE public.recibo SET status = $1, fim = $2 WHERE id = $3 RETURNING id",
-    [data.status, data.fim, data.id]
+    [data.status, data.receiptDate, data.receiptID]
   );
 };
 
 exports.getDocReceipt = function (id) {
   return db.oneOrNone(
-    "SELECT * FROM public.recibo WHERE id = $1 AND status != R",
-    [id]
+    "SELECT * FROM public.recibo WHERE id = $1",
+    [id, 'R']
   );
 };

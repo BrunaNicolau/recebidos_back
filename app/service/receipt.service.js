@@ -3,16 +3,17 @@ const gerarPDF = require("../utils/buildReceiptPDF");
 
 exports.getReceipts = async function (req, res) {
   // TODO: montar resposta com todos os campo
-  const instituicaoId = req.params.id;
+  const instituicaoId = req.params.institutionId;
   const receiptList = await receiptData.getReceipts(instituicaoId);
   if (receiptList.length <= 0)
     throw res.status(204).json({ error: "não encontrado" });
+
   return receiptList;
 };
 
 exports.getReceiptById = async function (req, res) {
   // TODO: montar resposta com todos os campo
-  const receiptId = req.params.id;
+  const receiptId = req.params.receiptId;
   const receiptInfo = await receiptData.getReceipt(receiptId);
   if (!receiptInfo) throw res.status(204).json({ error: "não encontrado" });
   return receiptInfo;
@@ -34,10 +35,10 @@ exports.createReceipts = async function (req, res) {
 };
 
 exports.editReceipts = async function (req, res) {
-  //TODO: falta algumas regras 
+  //TODO: falta algumas regras
   // quando mudar de status precisa verificar se precisa de data de recebimento
   // data fim tem q ser maior q data inicio (por essa regra em utils)
-  //TODO: pensar em redundancia 
+  //TODO: pensar em redundancia
   const receipt = req.body;
   const updReceipt = await receiptData.editReceipt(receipt);
   if (updReceipt.id) {
@@ -52,7 +53,7 @@ exports.editReceipts = async function (req, res) {
 };
 
 exports.editStatusReceipts = async function (req, res) {
-  //TODO: falta algumas regras 
+  //TODO: falta algumas regras
   // data fim tem q ser maior q data inicio (por essa regra em utils)
   const receipt = req.body;
   const updStatusReceipt = await receiptData.editStatusReceipt(receipt);
@@ -67,11 +68,9 @@ exports.editStatusReceipts = async function (req, res) {
   return resUpdate;
 };
 
-
 exports.buildReceiptDoc = async function (req, res) {
-  const recovedReceipt = await receiptData.getDocReceipt(req);
-  const pdf = '';
-  if(recovedReceipt) pdf = gerarPDF(recovedReceipt);
-  else throw res.status(403).json({ error: "Erro" });
+  const recovedReceipt = await receiptData.getDocReceipt(req.params.receiptId);
+  if (recovedReceipt) var pdf = gerarPDF(recovedReceipt);
+  else throw res.status(400).json({ error: "Erro" });
   return pdf;
 };
