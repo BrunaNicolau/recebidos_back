@@ -40,7 +40,7 @@ router.put("/editReceipt", async function (req, res, next) {
 
 router.patch("/editReceipt", async function (req, res, next) {
   try {
-    const posts = await receiptsService.editStatusReceipts(req);
+    const posts = await receiptsService.editStatusReceipts(req, res);
     res.json(posts);
   } catch (e) {
     next(e);

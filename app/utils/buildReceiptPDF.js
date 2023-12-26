@@ -17,12 +17,12 @@ function gerarPDF(receiptData) {
   const tel = "(11) 2217-0643";
   const cel = "(11) 96220-1765";
 
-  // TODO: ira receber valor dinamico
-  const id = receiptData.escritorio_id;
+  const id = receiptData.id + "/" + receiptData.escritorio_id;
+  //TODO: montar um de - para metodo de pag
   const paymentMethhod = receiptData.method_payment;
   const value = receiptData.valor;
   const date = new Date(receiptData.inicio);
-
+ 
   pdf.fontSize(10);
   pdf.text(doc, 200, 30);
   pdf.text(street, 200, 60);
