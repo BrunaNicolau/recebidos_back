@@ -2,7 +2,6 @@ const receiptData = require("../repository/receipt.repository");
 const gerarPDF = require("../utils/buildReceiptPDF");
 
 exports.getReceipts = async function (req, res) {
-  // TODO: montar resposta com todos os campo
   const instituicaoId = req.params.institutionId;
   const receiptList = await receiptData.getReceipts(instituicaoId);
   if (receiptList.length <= 0)
@@ -12,15 +11,22 @@ exports.getReceipts = async function (req, res) {
 };
 
 exports.getReceiptById = async function (req, res) {
-  // TODO: montar resposta com todos os campo
+  const officeHeader = req.headers["office"];
+
   const receiptId = req.params.receiptId;
   const receiptInfo = await receiptData.getReceipt(receiptId);
+
   if (!receiptInfo) throw res.status(406).json({ message: "não encontrado" });
+
+  if (officeHeader != "null" && receiptInfo.escritorio_id != officeHeader)
+    throw res.status(406).json({ message: "recibo indisponível" });
+
   return receiptInfo;
 };
 
 exports.createReceipts = async function (req, res) {
   //TODO: validação de ususario
+
   const dataReceipt = req.body;
   const create = await receiptData.createNewReceipt(dataReceipt);
   if (create) {
@@ -35,20 +41,23 @@ exports.createReceipts = async function (req, res) {
 };
 
 exports.editReceipts = async function (req, res) {
-  //TODO: falta algumas regras
-  // quando mudar de status precisa verificar se precisa de data de recebimento
-  // data fim tem q ser maior q data inicio (por essa regra em utils)
   const receiptReq = req.body;
-  const updReceipt = await receiptData.editReceipt(receiptReq);
-  if (updReceipt.id) {
-    var resUpdate = {
-      txt: "Recibo atualizado com sucesso:",
-      id: updReceipt.id,
-    };
-  } else {
-    throw res.status(403).json({ message: "Erro" });
+  const dataValidada = await validaDataFinal(receiptReq, res);
+
+  if (dataValidada) {
+    const updReceipt = await receiptData.editReceipt(receiptReq);
+    if (updReceipt && updReceipt.id) {
+      var resUpdate = {
+        txt: "Recibo atualizado com sucesso:",
+        id: updReceipt.id,
+      };
+    } else {
+      throw res
+        .status(403)
+        .json({ message: "Não foi possível atualizar os dados do recibo" });
+    }
+    return resUpdate;
   }
-  return resUpdate;
 };
 
 exports.editStatusReceipts = async function (req, res) {
@@ -84,7 +93,6 @@ async function validaDataFinal(req, res) {
       .json({ message: "Data fim não é permitido para essa operação" });
   } else if (receiptReq.status !== "E" && receiptReq.receiptDate) {
     const recoverReceipt = await receiptData.getReceipt(receiptReq.receiptID);
-
     const inicioDate = new Date(recoverReceipt.inicio);
     const fimDate = new Date(receiptReq.receiptDate);
 

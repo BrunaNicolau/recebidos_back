@@ -31,7 +31,7 @@ router.post("/createReceipts", async function (req, res, next) {
 
 router.put("/editReceipt", async function (req, res, next) {
   try {
-    const posts = await receiptsService.editReceipts(req);
+    const posts = await receiptsService.editReceipts(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
@@ -52,7 +52,7 @@ router.get("/generatePdf/:receiptId", async function (req, res, next) {
     const doc = await receiptsService.buildReceiptDoc(req);
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", "inline; filename=output.pdf");
-    doc.pipe(res);  
+    doc.pipe(res);
     doc.end();
   } catch (e) {
     next(e);
