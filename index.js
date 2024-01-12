@@ -23,7 +23,6 @@ app.use(passport.session());
 app.use("/recebidos", require("./app/controller/auth.controller"));
 app.use("/recebidos/office", require("./app/controller/office.controller"));
 app.use("/recebidos/receipt", require("./app/controller/receipt.controller"));
-app.use("/recebidos/donor", require("./app/controller/donor.controller"));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

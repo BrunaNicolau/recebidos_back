@@ -1,48 +1,47 @@
 const db = require("../config/database");
 
-exports.getOfficesByinstituicaoid = function (id) {
+exports.getOfficesByinstituicaoid = function (institutionId) {
   return db.query(
-    "SELECT id, responsavel, status FROM public.escritorio WHERE instituicaoid = $1 ORDER BY id ASC",
-    [id]
+    "SELECT id, responsable, status FROM public.offices WHERE institutionid = $1 ORDER BY id ASC",
+    [institutionId]
   );
 };
 
-exports.getOfficesByOfficeId = function (id) {
+exports.getOfficeByOfficeId = function (officeId) {
   return db.oneOrNone(
-    "SELECT id, instituicaoid, responsavel, endereco, cep, telefone, documento, inicio, fim, status, email FROM public.escritorio WHERE id = $1",
-    [id]
+    "SELECT id, institutionId, responsable, address, zipcode, telephone, document, startdate, enddate, status, email FROM public.offices WHERE id = $1",
+    [officeId]
   );
 };
 
-exports.newOffice = function (data) {
-  //TODO: falta gravar a data de inicio
+exports.createNewOffice = function (officeData) {
   return db.query(
-    "INSERT INTO public.escritorio(instituicaoid, responsavel, endereco, documento, cep, telefone, email) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+    "INSERT INTO public.offices(institutionId, responsable, address, document, zipcode, telephone, email) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
     [
-      data.institutionId,
-      data.responsible,
-      data.address,
-      data.document,
-      data.zipCode,
-      data.telephone, 
-      data.email
+      officeData.institutionId,
+      officeData.responsible,
+      officeData.address,
+      officeData.document,
+      officeData.zipCode,
+      officeData.telephone,
+      officeData.email,
     ]
   );
 };
 
-exports.updateDataOffice = function (dataOffice) {
+exports.updateDataOffice = function (updateOfficeData) {
   return db.query(
-    "UPDATE public.escritorio SET responsavel= $1, documento= $2, endereco= $3, cep= $4, telefone=$5, fim= $6, status= $7, email=$8 WHERE id = $9 RETURNING id",
+    "UPDATE public.offices SET responsable= $1, document= $2, address= $3, zipcode= $4, telephone=$5, enddate= $6, status= $7, email=$8 WHERE id = $9 RETURNING id",
     [
-      dataOffice.responsible,
-      dataOffice.document,
-      dataOffice.address,
-      dataOffice.zipCode,
-      dataOffice.telephone,
-      dataOffice.endDate,
-      dataOffice.status,
-      dataOffice.email,
-      dataOffice.officeId
+      updateOfficeData.responsible,
+      updateOfficeData.document,
+      updateOfficeData.address,
+      updateOfficeData.zipCode,
+      updateOfficeData.telephone,
+      updateOfficeData.endDate,
+      updateOfficeData.status,
+      updateOfficeData.email,
+      updateOfficeData.officeId,
     ]
   );
 };

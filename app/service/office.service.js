@@ -1,8 +1,7 @@
 const escritorioData = require("../repository/office.repository");
 
-exports.getlistOffices = async function (req, res) {
-  // TODO: montar resposta com todos os campo
-  const instituicaoid = req.params.id;
+exports.listOffices = async function (req, res) {
+  const instituicaoid = req.params.institutionId;
   const officesList = await escritorioData.getOfficesByinstituicaoid(
     instituicaoid
   );
@@ -11,16 +10,16 @@ exports.getlistOffices = async function (req, res) {
   return officesList;
 };
 
-exports.getOffice = async function (req, res) {
-  const officeID = req.params.id;
-  const officeData = await escritorioData.getOfficesByOfficeId(officeID);
+exports.officeById = async function (req, res) {
+  const officeID = req.params.officeId;
+  const officeData = await escritorioData.getOfficeByOfficeId(officeID);
   if (!officeData) throw res.status(204).json({ error: "não encontrado" });
   return officeData;
 };
 
-exports.createOffice = async function (req, res) {
+exports.newOffice = async function (req, res) {
   const dataOffice = await req.body;
-  const create = await escritorioData.newOffice(dataOffice);
+  const create = await escritorioData.createNewOffice(dataOffice);
   if (create) {
     var resNewOffice = {
       txt: "Escritorio criado com sucesso:",

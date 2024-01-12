@@ -2,9 +2,17 @@ const express = require("express");
 const router = express.Router();
 const receiptsService = require("../service/receipt.service");
 
-router.get("/listReceipts/:institutionId", async function (req, res, next) {
+router.get("/teste", async function (req, res, next) {
   try {
-    const posts = await receiptsService.getReceipts(req, res);
+    res.json("teste ok");
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/receiptsList/:institutionId", async function (req, res, next) {
+  try {
+    const posts = await receiptsService.listReceipts(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
@@ -13,16 +21,16 @@ router.get("/listReceipts/:institutionId", async function (req, res, next) {
 
 router.get("/receiptById/:receiptId", async function (req, res, next) {
   try {
-    const posts = await receiptsService.getReceiptById(req, res);
+    const posts = await receiptsService.receiptById(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
   }
 });
 
-router.post("/createReceipts", async function (req, res, next) {
+router.post("/newReceipt", async function (req, res, next) {
   try {
-    const posts = await receiptsService.createReceipts(req, res);
+    const posts = await receiptsService.newReceipt(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
@@ -31,7 +39,7 @@ router.post("/createReceipts", async function (req, res, next) {
 
 router.put("/editReceipt", async function (req, res, next) {
   try {
-    const posts = await receiptsService.editReceipts(req, res);
+    const posts = await receiptsService.editReceipt(req, res);
     res.json(posts);
   } catch (e) {
     next(e);
@@ -40,7 +48,7 @@ router.put("/editReceipt", async function (req, res, next) {
 
 router.patch("/editReceipt", async function (req, res, next) {
   try {
-    const posts = await receiptsService.editStatusReceipts(req, res);
+    const posts = await receiptsService.editStatusReceipt(req, res);
     res.json(posts);
   } catch (e) {
     next(e);

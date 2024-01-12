@@ -1,48 +1,61 @@
 const db = require("../config/database");
 
-exports.getReceipts = function (id) {
+exports.getReceipts = function (receiptId) {
   return db.query(
-    "SELECT recibo.id, recibo.escritorio_id, recibo.valor, recibo.status, escritorio.responsavel " +
-      "FROM public.recibo " +
-      "JOIN public.escritorio ON recibo.escritorio_id = escritorio.id " +
-      "WHERE recibo.instituicao_id = $1 " +
-      "ORDER BY recibo.id ASC",
-    [id]
+    "SELECT r.id, r.officeid, r.value, r.status, o.responsable " +
+      "FROM public.receipts r " +
+      "JOIN public.offices o ON r.officeid = o.id " +
+      "WHERE r.institutionid = $1 ORDER BY r.id ASC;",
+    [receiptId]
   );
 };
 
-exports.getReceipt = function (id) {
-  return db.oneOrNone("SELECT * FROM public.recibo WHERE id = $1", [id]);
+exports.getReceiptById = function (receiptId) {
+  return db.oneOrNone("SELECT * FROM public.receipts WHERE id = $1", [
+    receiptId,
+  ]);
 };
 
-exports.createNewReceipt = function (data) {
+exports.createNewReceipt = function (receiptData) {
   return db.oneOrNone(
-    "INSERT INTO public.recibo(escritorio_id, instituicao_id, valor, method_payment) VALUES ($1, $2, $3, $4) RETURNING id",
-    [data.office, data.institution, data.value, data.paymentMethod]
-  );
-};
-
-exports.editReceipt = function (data) {
-  return db.oneOrNone(
-    "UPDATE public.recibo SET escritorio_id = $1, valor = $2, method_payment = $3, status = $4, fim = $5 WHERE id = $6 RETURNING id",
+    "INSERT INTO public.receipts(officeid, institutionid, value, methodpayment) VALUES ($1, $2, $3, $4) RETURNING id",
     [
-      data.office,
-      data.value,
-      data.typePayment,
-      data.status,
-      data.receiptDate,
-      data.receiptID,
+      receiptData.officeId,
+      receiptData.institutionId,
+      receiptData.value,
+      receiptData.methodPayment,
     ]
   );
 };
 
-exports.editStatusReceipt = function (data) {
+exports.updateDataReceipt = function (updateReceiptData) {
   return db.oneOrNone(
-    "UPDATE public.recibo SET status = $1, fim = $2 WHERE id = $3 RETURNING id",
-    [data.status, data.receiptDate, data.receiptID]
+    "UPDATE public.receipts SET officeid = $1, value = $2, methodpayment = $3, status = $4, enddate = $5 WHERE id = $6 RETURNING id",
+    [
+      updateReceiptData.officeId,
+      updateReceiptData.value,
+      updateReceiptData.methodPayment,
+      updateReceiptData.status,
+      updateReceiptData.receiptDate,
+      updateReceiptData.receiptId,
+    ]
   );
 };
 
-exports.getDocReceipt = function (id) {
-  return db.oneOrNone("SELECT * FROM public.recibo WHERE id = $1", [id, "R"]);
+exports.updateStatusReceipt = function (updStatusReceiptData) {
+  return db.oneOrNone(
+    "UPDATE public.receipts SET status = $1, enddate= $2 WHERE id = $3 RETURNING id",
+    [
+      updStatusReceiptData.status,
+      updStatusReceiptData.receiptDate,
+      updStatusReceiptData.receiptId,
+    ]
+  );
+};
+
+exports.getDocReceipt = function (receiptId) {
+  return db.oneOrNone("SELECT * FROM public.receipts WHERE id = $1", [
+    receiptId,
+    "R",
+  ]);
 };
