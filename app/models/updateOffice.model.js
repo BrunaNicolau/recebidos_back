@@ -3,7 +3,7 @@ const Yup = require("yup");
 const updateOfficeValidators = async (req, res, next) => {
   try {
     const schema = Yup.object().shape({
-      responsible: Yup.string().required(),
+      responsable: Yup.string().required(),
       document: Yup.number().required(),
       address: Yup.string().required(),
       zipCode: Yup.number().required(), 

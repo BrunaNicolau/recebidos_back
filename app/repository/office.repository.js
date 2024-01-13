@@ -33,7 +33,7 @@ exports.updateDataOffice = function (updateOfficeData) {
   return db.query(
     "UPDATE public.offices SET responsable= $1, document= $2, address= $3, zipcode= $4, telephone=$5, enddate= $6, status= $7, email=$8 WHERE id = $9 RETURNING id",
     [
-      updateOfficeData.responsible,
+      updateOfficeData.responsable,
       updateOfficeData.document,
       updateOfficeData.address,
       updateOfficeData.zipCode,
