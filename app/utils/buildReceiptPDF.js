@@ -10,13 +10,12 @@ function gerarPDF(receiptData) {
   const imagePath = path.join(__dirname, "img/logoDL.png");
   pdf.image(imagePath, 10, 10, { width: 180, height: 90 });
 
-  const doc = "CNPJ: 09.973.391/0001-32";
-  const street = "R. Major Boaventura, 558 - CEP: 03569-030";
-  const neighborhood = "VL. Nhocuné - São Paulo";
-  const inscription = "Insc. Municipal: 427.422";
-  const tel = "(11) 2217-0643";
-  const cel = "(11) 96220-1765";
-  console.log(receiptData);
+  const doc = "CNPJ: XX.XXX.XXX/XXXX-XX";
+  const street = "R. XXXXXXXX XXXXXXXXX, XXX - CEP: XXXXX-XXX";
+  const neighborhood = "XXXXXX - São Paulo";
+  const inscription = "Insc. Municipal: XXX.XXX";
+  const tel = "(XX) XXXX-XXXX";
+  const cel = "(XX) XXXX-XXXX";
   const id = receiptData.id + "/" + receiptData.officeid;
   const paymentMethhod = paymentConfig(receiptData.methodpayment);
   const value = receiptData.value;
