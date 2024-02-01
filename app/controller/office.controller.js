@@ -3,6 +3,8 @@ const router = express.Router();
 const escritorioService = require("../service/office.service");
 const validatorNewOffice = require("../models/newOffice.model");
 const updateOfficeValidators = require("../models/updateOffice.model");
+const errorHandlingMiddleware = require("../../middleware/errorMiddleware.service");
+
 
 router.get("/teste", async function (req, res, next) {
   try {
@@ -14,28 +16,30 @@ router.get("/teste", async function (req, res, next) {
 
 router.get("/officesList/:institutionId", async function (req, res, next) {
   try {
-    const listOffice = await escritorioService.listOffices(req, res);
+    const listOffice = await escritorioService.listOffices(
+      req.params.institutionId
+    );
     res.json(listOffice);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    errorHandlingMiddleware(error, res);
   }
 });
 
 router.get("/officeById/:officeId", async function (req, res, next) {
   try {
-    const office = await escritorioService.officeById(req, res);
+    const office = await escritorioService.officeById(req.params.officeId);
     res.json(office);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    errorHandlingMiddleware(error, res);
   }
 });
 
 router.post("/newOffice", validatorNewOffice, async function (req, res, next) {
   try {
-    const msg = await escritorioService.newOffice(req, res);
-    res.json(msg);
-  } catch (e) {
-    next(e);
+    const newOfficeResult = await escritorioService.newOffice(req.body);
+    res.json(newOfficeResult);
+  } catch (error) {
+    errorHandlingMiddleware(error, res);
   }
 });
 
@@ -44,12 +48,11 @@ router.put(
   updateOfficeValidators,
   async function (req, res, next) {
     try {
-      const posts = await escritorioService.editOffice(req, res);
-      res.json(posts);
-    } catch (e) {
-      next(e);
+      const editedOffice = await escritorioService.editOffice(req.body);
+      res.json(editedOffice);
+    } catch (error) {
+      errorHandlingMiddleware(error, res);
     }
-  }
-);
+  });
 
 module.exports = router;

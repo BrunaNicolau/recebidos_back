@@ -28,7 +28,7 @@ exports.createNewReceipt = function (receiptData) {
   );
 };
 
-exports.updateDataReceipt = function (updateReceiptData) {
+exports.updateReceipt = function (updateReceiptData) {
   return db.oneOrNone(
     "UPDATE public.receipts SET officeid = $1, value = $2, methodpayment = $3, status = $4, enddate = $5 WHERE id = $6 RETURNING id",
     [
