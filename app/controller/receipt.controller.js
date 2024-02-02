@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const receiptsService = require("../service/receipt.service");
-const errorHandlingMiddleware = require("../../middleware/errorMiddleware.service");
-
+const errorHandlingMiddleware = require("../middleware/errorMiddleware.service");
 
 router.get("/teste", async function (res) {
   try {

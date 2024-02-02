@@ -11,7 +11,8 @@ function gerarPDF(receiptData) {
   pdf.image(imagePath, 10, 10, { width: 180, height: 90 });
 
   const doc = "CNPJ: XX.XXX.XXX/XXXX-XX";
-  const street = "R. XXXXXXXX XXXXXXXXX, XXX - CEP: XXXXX-XXX";
+  const street = "R. XXXXXXXX XXXXXXXXX, XXX";
+  const zipCode = "CEP: XXXXX-XXX";
   const neighborhood = "XXXXXX - São Paulo";
   const inscription = "Insc. Municipal: XXX.XXX";
   const tel = "(XX) XXXX-XXXX";
@@ -24,10 +25,11 @@ function gerarPDF(receiptData) {
   pdf.fontSize(10);
   pdf.text(doc, 200, 30);
   pdf.text(street, 200, 60);
+  pdf.text(zipCode, 430, 60);
   pdf.text(neighborhood, 200, 90);
   pdf.text(inscription, 400, 30);
-  pdf.text(tel, 400, 60);
-  pdf.text(cel, 400, 90);
+  pdf.text(tel, 430, 80);
+  pdf.text(cel, 430, 90);
 
   pdf.lineWidth(1);
   pdf.moveTo(0, 120).lineTo(600, 120).stroke();
