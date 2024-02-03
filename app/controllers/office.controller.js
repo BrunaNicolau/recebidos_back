@@ -1,8 +1,12 @@
-const escritorioData = require("../repository/office.repository");
-const { EmptyError, BadRequestError, UnauthorizedError } = require("../utils/errorHandle");
+const escritorioData = require("../repositories/office.repository");
+const {
+  EmptyError,
+  BadRequestError,
+  UnauthorizedError,
+} = require("../utils/errorHandle");
 
 exports.listOffices = async function (institutionId) {
-  const officesList = await escritorioData.getOfficesByinstituicaoid(
+  const officesList = await escritorioData.getOfficesByInstitutionId(
     institutionId
   );
 
@@ -21,10 +25,11 @@ exports.newOffice = async function (dataOffice) {
   //TODO: validar o usuario q esta fazendo acao
   try {
     const create = await escritorioData.createNewOffice(dataOffice);
+
     if (create) {
       var resNewOffice = {
         txt: "Escritorio criado com sucesso:",
-        id: create[0].id,
+        id: create,
       };
     } else {
       throw new UnauthorizedError("Ação não permitida");
@@ -40,10 +45,10 @@ exports.editOffice = async function (dataOffice) {
   //TODO: validar o usuario q esta fazendo acao
   try {
     const editedOffice = await escritorioData.updateDataOffice(dataOffice);
-    if (editedOffice[0].id) {
+    if (editedOffice) {
       var resUpdate = {
         txt: "Escritorio atulizado com sucesso:",
-        id: editedOffice[0].id,
+        id: editedOffice,
       };
     } else {
       throw new UnauthorizedError("Ação não permitida");

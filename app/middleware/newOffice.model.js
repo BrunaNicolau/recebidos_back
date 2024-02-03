@@ -4,7 +4,7 @@ const newOfficeValidators = async (req, res, next) => {
   try {
     const schema = Yup.object().shape({
       institutionId: Yup.number().required(),
-      responsible: Yup.string().required(),
+      responsable: Yup.string().required(),
       document: Yup.number().required(),
       startDate: Yup.date().required(),
       zipCode: Yup.number().required(), 

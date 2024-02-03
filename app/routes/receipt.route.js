@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const receiptsService = require("../service/receipt.service");
-const errorHandlingMiddleware = require("../middleware/errorMiddleware.service");
+const receiptsService = require("../controllers/receipt.controller");
+const errorHandlingMiddleware = require("../utils/errorMiddleware.service");
 
 router.get("/teste", async function (res) {
   try {
@@ -59,9 +59,9 @@ router.patch("/editReceipt", async function (req, res) {
   }
 });
 
-router.get("/generatePdf/:receiptId", async function (req, res, next) {
+router.get("/generatePdf/:receiptId", async function (req, res) {
   try {
-    const doc = await receiptsService.buildReceiptDoc(req);
+    const doc = await receiptsService.buildReceiptDoc(req.params.receiptId);
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", "inline; filename=output.pdf");
     doc.pipe(res);

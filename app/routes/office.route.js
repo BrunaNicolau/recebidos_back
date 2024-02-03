@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const escritorioService = require("../service/office.service");
-const validatorNewOffice = require("../models/newOffice.model");
-const updateOfficeValidators = require("../models/updateOffice.model");
-const errorHandlingMiddleware = require("../middleware/errorMiddleware.service");
+const escritorioService = require("../controllers/office.controller");
+const validatorNewOffice = require("../middleware/newOffice.model");
+const updateOfficeValidators = require("../middleware/updateOffice.model");
+const errorHandlingMiddleware = require("../utils/errorMiddleware.service");
 
 router.get("/teste", async function (res, next) {
   try {

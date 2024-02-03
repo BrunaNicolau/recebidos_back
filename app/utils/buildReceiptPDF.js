@@ -7,7 +7,7 @@ function gerarPDF(receiptData) {
     layout: "landscape",
   });
 
-  const imagePath = path.join(__dirname, "img/logoDL.png");
+  const imagePath = path.join(__dirname, "img/logoFake.png");
   pdf.image(imagePath, 10, 10, { width: 180, height: 90 });
 
   const doc = "CNPJ: XX.XXX.XXX/XXXX-XX";
@@ -58,7 +58,7 @@ function gerarPDF(receiptData) {
   pdf.font("Helvetica");
   pdf.text(`${date.toLocaleDateString()}`, 60, 260);
 
-  const logoPath = path.join(__dirname, "img/logoStxt.png");
+  const logoPath = path.join(__dirname, "img/logoFakeSTxt.png");
   pdf.image(logoPath, 405, 265, { opacity: 0.5 });
 
   pdf.lineWidth(1);

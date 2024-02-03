@@ -1,4 +1,4 @@
-const receiptData = require("../repository/receipt.repository");
+const receiptData = require("../repositories/receipt.repository");
 const gerarPDF = require("../utils/buildReceiptPDF");
 const {
   EmptyError,
@@ -44,13 +44,12 @@ exports.newReceipt = async function (dataReceipt) {
 exports.editReceipt = async function (rptData) {
   try {
     const dataValidada = await validateFinalDate(rptData);
-
     if (dataValidada) {
       const updReceipt = await receiptData.updateReceipt(rptData);
-      if (updReceipt && updReceipt.id) {
+      if (updReceipt) {
         var resUpdate = {
           txt: "Recibo atualizado com sucesso:",
-          id: updReceipt.id,
+          id: updReceipt,
         };
       } else {
         throw new UnauthorizedError("Ação não permitida");
@@ -70,10 +69,10 @@ exports.editStatusReceipt = async function (receiptStatusData) {
       const updStatusReceipt = await receiptData.updateStatusReceipt(
         receiptStatusData
       );
-      if (updStatusReceipt && updStatusReceipt.id) {
+      if (updStatusReceipt) {
         var resStatusUpdate = {
           txt: "Recibo atualizado com sucesso:",
-          id: updStatusReceipt.id,
+          id: updStatusReceipt,
         };
       } else {
         throw new UnauthorizedError("Ação não permitida");
@@ -108,9 +107,13 @@ async function validateFinalDate(receiptInfo) {
   return true;
 }
 
-exports.buildReceiptDoc = async function (req, res) {
-  const recovedReceipt = await receiptData.getDocReceipt(req.params.receiptId);
-  if (recovedReceipt) var pdf = gerarPDF(recovedReceipt);
-  else throw res.status(400).json({ message: "Erro" });
-  return pdf;
+exports.buildReceiptDoc = async function (receiptId) {
+  try {
+    const recovedReceipt = await receiptData.getDocReceipt(receiptId);
+    if (recovedReceipt) var pdf = gerarPDF(recovedReceipt);
+    else throw new UnauthorizedError("Ação não permitida");
+    return pdf;
+  } catch {
+    throw new BadRequestError("Dado inválido");
+  }
 };
