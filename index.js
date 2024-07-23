@@ -25,5 +25,5 @@ app.use("/recebidos/office", require("./app/routes/office.route"));
 app.use("/recebidos/receipt", require("./app/routes/receipt.route"));
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
